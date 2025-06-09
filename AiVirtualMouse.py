@@ -12,6 +12,8 @@ cap.set(3, wCam)
 cap.set(4, hCam)
 pTime = 0
 detector=htm.handDetector(maxHands=1)
+wScr,hScr=autopy.screen.size()
+print(wScr,hScr)
 
 
 while True:
@@ -28,12 +30,13 @@ while True:
         print(x1,y1,x2,y2)
     #3 check t=which finger are up
     fingers =detector.fingersUp()
-    print(fingers)
+    # print(fingers)
     #4 only index finger : Moving mode
     if fingers[1]==1 and fingers[2]==0:
 
     #5 convert coordination
-    
+        x3=np.interp(x1,(0,wCam),(0,wScr))
+        y3=np.interp(y1,(0,hCam),(0,hScr))
     #6 smoothen values
     #7 move mouse
     #8 both index and middle finger are up clicking mode
