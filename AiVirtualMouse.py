@@ -11,14 +11,24 @@ cap = cv2.VideoCapture(0)
 cap.set(3, wCam)
 cap.set(4, hCam)
 pTime = 0
+detector=htm.handDetector(maxHands=1)
 
 
 while True:
     #1. find hand landmark
     success, img = cap.read()
+    img=detector.findHands(img)
+    lmList,bbox=detector.findPosition(img)
+    print(lmList)
 
     # 2 get the tip of the index and middle finger
+    if len(lmList) != 0:
+        x1,y1=lmList[8][1:]
+        x2,y2=lmList[12][1:]
+        print(x1,y1,x2,y2)
     #3 check t=which finger are up
+    fingers =detector.fingersUp()
+    print(fingers)
     #4 only index finger : Moving mode
     #5 convert coordination
     #6 smoothen values
