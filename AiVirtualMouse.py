@@ -30,7 +30,10 @@ while True:
     fingers =detector.fingersUp()
     print(fingers)
     #4 only index finger : Moving mode
+    if fingers[1]==1 and fingers[2]==0:
+
     #5 convert coordination
+    
     #6 smoothen values
     #7 move mouse
     #8 both index and middle finger are up clicking mode
