@@ -6,7 +6,7 @@ import autopy
 
 wCam, hCam = 640, 480
 
-
+frameR=100#frame reductuion
 cap = cv2.VideoCapture(0)
 cap.set(3, wCam)
 cap.set(4, hCam)
@@ -31,10 +31,12 @@ while True:
     #3 check t=which finger are up
     fingers =detector.fingersUp()
     # print(fingers)
+    cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR), (250, 0, 250), 2)
     #4 only index finger : Moving mode
     if fingers[1]==1 and fingers[2]==0:
 
     #5 convert coordination
+
         x3=np.interp(x1,(0,wCam),(0,wScr))
         y3=np.interp(y1,(0,hCam),(0,hScr))
     #6 smoothen values
