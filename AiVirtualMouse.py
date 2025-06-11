@@ -38,11 +38,17 @@ while True:
         x3=np.interp(x1,(0,wCam),(0,wScr))
         y3=np.interp(y1,(0,hCam),(0,hScr))
     #6 smoothen values
+
     #7 move mouse
-        autopy.mouse.move (x3,y3)
+        autopy.mouse.move (wScr-x3,y3)
+        cv2.circle(img, (x1, y1), 5, (0, 255, 250), cv2.FILLED)
+
     #8 both index and middle finger are up clicking mode
+
     #9 find distance bw finger
+
     #10 click mouse if distance short
+
     #11 frame rate
     cTime=time.time()
     fps=1/(cTime-pTime)
