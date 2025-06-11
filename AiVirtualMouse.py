@@ -39,6 +39,7 @@ while True:
         y3=np.interp(y1,(0,hCam),(0,hScr))
     #6 smoothen values
     #7 move mouse
+        autopy.mouse.move (x3,y3)
     #8 both index and middle finger are up clicking mode
     #9 find distance bw finger
     #10 click mouse if distance short
