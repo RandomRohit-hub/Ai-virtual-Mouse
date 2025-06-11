@@ -51,10 +51,10 @@ while True:
 
         # 8. Clicking Mode: Both Index and Middle Fingers Up
         if fingers[1] == 1 and fingers[2] == 1:
-            length, img, _ = detector.findDistance(8, 12, img)  # Fixed call
+            length, img, Lineinfo = detector.findDistance(8, 12, img)  # Fixed call
             print(length)
             if length < 20:
-                cv2.circle(img, (x1, y1), 5, (0, 255, 250), cv2.FILLED)
+                cv2.circle(img, (Lineinfo[4],Lineinfo[5]), 5, (0, 255, 250), cv2.FILLED)
 
             # 10. Click mouse if distance is short (threshold example: < 40)
             if length < 40:
