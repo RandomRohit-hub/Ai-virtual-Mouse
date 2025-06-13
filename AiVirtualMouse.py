@@ -7,6 +7,7 @@ import autopy
 # Set camera dimensions
 wCam, hCam = 640, 480
 frameR = 100  # Frame reduction for cursor control area
+smootheninng= 5
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -21,42 +22,43 @@ wScr, hScr = autopy.screen.size()
 print(wScr, hScr)
 
 while True:
-    # 1. Find hand landmarks
+# 1. Find hand landmarks
     success, img = cap.read()
     img = detector.findHands(img)
     lmList, bbox = detector.findPosition(img)
 
-    # 2. Get the tip of the index and middle fingers
+ # 2. Get the tip of the index and middle fingers
     if len(lmList) != 0:
         x1, y1 = lmList[8][1:]  # Index finger tip
         x2, y2 = lmList[12][1:]  # Middle finger tip
 
         print(x1, y1, x2, y2)
 
-        # 3. Check which fingers are up
+  # 3. Check which fingers are up
         fingers = detector.fingersUp()
 
-        # 4. Draw frame rectangle
+  # 4. Draw frame rectangle
         cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR), (250, 0, 250), 2)
 
-        # 5. Moving Mode: Only Index Finger Up
+ # 5. Moving Mode: Only Index Finger Up
         if fingers[1] == 1 and fingers[2] == 0:
-            # 6. Convert coordinates
+ # 6. Convert coordinates
             x3 = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
             y3 = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
 
-            # 7. Move mouse
+ # 7. Move mouse
             autopy.mouse.move(wScr - x3, y3)
             cv2.circle(img, (x1, y1), 5, (0, 255, 250), cv2.FILLED)
 
-        # 8. Clicking Mode: Both Index and Middle Fingers Up
+# 8. Clicking Mode: Both Index and Middle Fingers Up
         if fingers[1] == 1 and fingers[2] == 1:
             length, img, Lineinfo = detector.findDistance(8, 12, img)  # Fixed call
             print(length)
             if length < 20:
                 cv2.circle(img, (Lineinfo[4],Lineinfo[5]), 5, (0, 255, 250), cv2.FILLED)
+                autopy.mouse.click()
 
-            # 10. Click mouse if distance is short (threshold example: < 40)
+# 10. Click mouse if distance is short (threshold example: < 40)
             if length < 40:
                 autopy.mouse.click()
 
